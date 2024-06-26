@@ -1,0 +1,31 @@
+#!/bin/bash
+function gui_functions () {
+
+	if [[ $1 == kill_current_window ]]; then
+		kill $(lumwmc focus_window_pid);
+	fi
+
+	if [[ $1 == focus_on_select_window ]]; then
+		lumwmc kill_current_window;
+	fi
+
+	if [[ $1 == fullscreen_window_current ]]; then
+		lumwmc fullscreen_window_current;
+	fi
+
+	if [[ $1 == resize ]]; then
+		lumwmc resize $2 $3 $4;	
+	fi
+
+	if [[ $1 == set_pos ]]; then
+		resize_windows $@;
+	fi
+	
+	if [[ $1 == go_to_workspace ]]; then
+		change_workspace $@;
+	fi
+
+
+
+}
+

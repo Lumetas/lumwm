@@ -1,0 +1,92 @@
+#!/bin/bash
+
+if [[ $1 == "screen_size" ]]; then
+	X=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1);
+	Y=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2);
+	echo -e "$X\n$Y"
+fi
+
+if [[ $1 == "window_size" ]]; then
+	window_x=$(xdotool getwindowgeometry $(xdotool getwindowfocus) | sed -n 3p | awk -F 'Geometry: ' '{print $2}' | awk -F 'x' '{print $1}');
+	window_y=$(xdotool getwindowgeometry $(xdotool getwindowfocus) | sed -n 3p | awk -F 'Geometry: ' '{print $2}' | awk -F 'x' '{print $2}');
+	echo -e "$window_x\n$window_y"
+fi
+
+if [[ $1 == "window_position" ]]; then
+	window_pos_x=$(xdotool getwindowgeometry $(xdotool getwindowfocus) | sed -n 2p | awk -F 'Position: ' '{print $2}' | awk -F '(' '{print $1}' | awk -F ',' '{print $1}');
+	window_pos_y=$(xdotool getwindowgeometry $(xdotool getwindowfocus) | sed -n 2p | awk -F 'Position: ' '{print $2}' | awk -F '(' '{print $1}' | awk -F ',' '{print $2}');
+	echo -e "$window_pos_x\n$window_pos_y"
+fi
+
+if [[ $1 == "focus_window_id" ]]; then
+	xdotool getwindowfocus
+fi
+
+if [[ $1 == "get_window_from_mouse" ]]; then
+	xdotool getmouselocation | awk -F 'window:' '{print $2}'
+fi
+
+if [[ $1 == "focus_window_pid" ]]; then
+	xdotool getwindowfocus getwindowpid
+fi
+
+if [[ $1 == "select_window_id" ]]; then
+	xdotool selectwindow
+fi
+
+if [[ $1 == "select_window_pid" ]]; then
+	xdotool selectwindow getwindowpid
+fi
+
+if [[ $1 == "showed_windows" ]]; then
+	xdotool search --onlyvisible .
+fi
+
+
+
+
+
+
+
+
+if [[ $1 == "set_window_pos" ]]; then
+	xdotool windowmove $2 $3 $4;
+fi
+
+if [[ $1 == "set_window_size" ]]; then
+	xdotool windowsize $2 $3 $4;
+fi
+
+
+if [[ $1 == "focus_on_select_window" ]]; then
+	win_id=$(xdotool selectwindow);
+	xdotool windowfocus $win_id;
+	xdotool windowactivate $win_id;
+fi
+
+if [[ $1 == "mouse_focus" ]]; then
+	xdotool windowfocus $($0 get_window_from_mouse);
+fi
+
+if [[ $1 == "fullscreen_window_current" ]]; then
+	X=$($0 screen_size | sed -n 1p);
+	Y=$($0 screen_size | sed -n 2p);
+	win_id=$(xdotool getwindowfocus);
+	xdotool windowsize $win_id $X $Y;
+	xdotool windowmove $win_id 0 0
+fi
+
+if [[ $1 == "resize" ]]; then
+	window_x=$($0 window_size | sed -n 1p);
+	window_y=$($0 window_size | sed -n 2p);
+	if [[ $2 == "x" ]]; then
+		let "newx = $window_x $3 $4";
+		xdotool windowsize $(xdotool getwindowfocus) $newx $window_y;
+	fi
+	if [[ $2 == "y" ]]; then
+		let "newy = $window_y $3 $4";
+		xdotool windowsize $(xdotool getwindowfocus) $window_x $newy;
+	fi
+fi
+
+

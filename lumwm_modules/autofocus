@@ -1,0 +1,4 @@
+#!/bin/bash
+function autofocus() {
+		python3 ~/lumwm_modules/modules_data/autofocus.py;
+}

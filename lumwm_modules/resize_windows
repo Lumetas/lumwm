@@ -1,0 +1,37 @@
+#!/bin/bash
+function resize_windows() {
+	sc_x=$(lumwmc screen_size | sed -n 1p);
+	sc_y=$(lumwmc screen_size | sed -n 2p);
+	win_id=$(lumwmc focus_window_id);
+	let "newx = $sc_x / 2";
+	let "newy = $sc_y / 2";
+
+	if [[ $2 == left ]]; then
+		lumwmc set_window_pos $win_id 0 0;
+		lumwmc set_window_size $win_id $newx $sc_y
+	elif [[ $2 == right ]]; then
+		lumwmc set_window_pos $win_id $newx 0;
+		lumwmc set_window_size $win_id $newx $sc_y;
+	elif [[ $2 == top ]]; then
+		lumwmc set_window_pos $win_id 0 0;
+		lumwmc set_window_size $win_id $sc_x $newy;
+	elif [[ $2 == bottom ]]; then
+		lumwmc set_window_pos $win_id 0 $newy;
+		lumwmc set_window_size $win_id $sc_x $newy;
+
+
+	elif [[ $2 == left-top ]]; then
+		lumwmc set_window_pos $win_id 0 0
+        lumwmc set_window_size $win_id $newx $newy
+	elif [[ $2 == right-top ]]; then
+        lumwmc set_window_pos $win_id $newx 0
+        lumwmc set_window_size $win_id $newx $newy
+	elif [[ $2 == left-bottom ]]; then
+        lumwmc set_window_pos $win_id 0 $newy
+        lumwmc set_window_size $win_id $newx $newy
+	elif [[ $2 == right-bottom ]]; then
+        lumwmc set_window_pos $win_id $newx $newy
+        lumwmc set_window_size $win_id $newx $newy
+	fi
+}
+

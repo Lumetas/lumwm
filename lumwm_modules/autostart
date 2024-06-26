@@ -1,0 +1,17 @@
+#!/bin/bash
+mkdir -p ~/.config/lumwm/data;
+rm ~/.config/lumwm/data/workspace.json;
+echo '{"current":"1"}' > ~/.config/lumwm/data/workspace.json;
+
+
+
+
+
+feh --bg-scale ~/wallpaper/bg1.jpg &
+compton -f --vsync &
+xsetroot -cursor_name left_ptr &
+#~/dwm/status &
+syndaemon -i 0.25 &
+xss-lock ~/dwm/lock &
+sxhkd &
+sleep 2 && setxkbmap 'us,ru' ',winkeys' 'grp:win_space_toggle' ; setxkbmap -option 'ctrl:nocaps' & 

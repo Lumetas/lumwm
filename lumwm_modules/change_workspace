@@ -1,0 +1,4 @@
+#!/bin/bash
+function change_workspace() {
+	python3 ~/lumwm_modules/modules_data/change_workspace.py $@;
+}

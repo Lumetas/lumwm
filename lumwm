@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Блок подключения модулей
+if [[ $1 == '' ]]; then
+	# Подключение модулей в случае отсутствия аргументов
+	source ~/lumwm_modules/autostart &
+	source ~/lumwm_modules/autofocus && autofocus;
+else
+	# Подключение модулей при наличии аргументов
+	source ~/lumwm_modules/resize_windows;
+	source ~/lumwm_modules/change_workspace;
+	source ~/lumwm_modules/functions;
+fi
+
+
+
+
+# Общей блок кода
+source ~/lumwm_modules/lumwmc;
+
+
+
+
+
+
+
+
+
+# Конец общего блока кода
+
+
+
+# Блок финального кода
+if [[ $1 == '' ]]; then
+	# Финальный код в случае отсутствия аргументов
+	while [[ 1 == 1 ]]; do sleep 10; done;
+else
+	# Финальный код при наличии аргументов
+	gui_functions $@;
+fi
+

@@ -81,4 +81,5 @@ if (len(sys.argv) > 1 and sys.argv[1] == 'go_to_workspace'):
     change_workspace(sys.argv[2])
     focus_window_to(0)
 
-
+if (len(sys.argv) > 1 and sys.argv[1] == 'to_window'):
+    focus_window_to(int(sys.argv[2]))

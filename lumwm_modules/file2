@@ -1,5 +1,0 @@
-#!/bin/bash
-function zalupa() {
-	echo $1;
-
-}
